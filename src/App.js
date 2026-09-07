@@ -75,7 +75,7 @@ const Layout = ({ children, isChatbotOpen, setIsChatbotOpen }) => (
 // Root Handler – detects a Google/OAuth redirect landing on "/"
 // ============================================
 const RootHandler = ({ isChatbotOpen, setIsChatbotOpen }) => {
-  const [isAuthCallback, setIsAuthCallback] = useState(() => {
+  const [isAuthCallback] = useState(() => {
     const realQuery = new URLSearchParams(window.location.search);
     return Boolean(realQuery.get("code"));
   });
