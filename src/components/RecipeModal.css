@@ -1,0 +1,233 @@
+/* ============================================
+   ELVRE — RECIPE MODAL STYLING
+   ============================================ */
+
+.recipe-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(23, 19, 15, 0.75);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: recipeFadeIn 0.25s ease-out;
+}
+
+.recipe-modal-card {
+  background: var(--canvas-ivory);
+  border-radius: var(--radius-xl);
+  max-width: 820px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 44px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-medium);
+}
+
+.recipe-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(83, 49, 26, 0.08);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--jaggery-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recipe-modal-close:hover {
+  background: var(--jaggery-dark);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.recipe-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.recipe-cuisine-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.recipe-diff-badge {
+  background: var(--canvas-paper);
+  border: 1px solid var(--border-medium);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  color: var(--ink-soft);
+}
+
+.recipe-modal-title {
+  font-size: 2.2rem;
+  color: var(--jaggery-dark);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.recipe-modal-desc {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.recipe-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 20px;
+  background: var(--canvas-paper);
+  border-radius: var(--radius-md);
+  margin-bottom: 32px;
+  border: 1px solid var(--border-subtle);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--jaggery-dark);
+}
+
+.meta-item svg {
+  color: var(--gold-dark);
+}
+
+/* MODAL BODY */
+.recipe-modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 36px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 32px;
+}
+
+.column-title {
+  font-size: 1.4rem;
+  color: var(--jaggery-dark);
+  margin-bottom: 18px;
+}
+
+.ingredients-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ingredients-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--ink-primary);
+  line-height: 1.5;
+}
+
+.bullet-leaf {
+  color: var(--gold-dark);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.method-steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.method-steps-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--jaggery-dark);
+  color: var(--canvas-ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.method-steps-list p {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.recipe-protip-card {
+  margin-top: 24px;
+  background: rgba(200, 157, 92, 0.12);
+  border-left: 3px solid var(--gold-primary);
+  padding: 16px 18px;
+  border-radius: var(--radius-sm);
+}
+
+.recipe-protip-card strong {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--jaggery-dark);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.recipe-protip-card p {
+  font-size: 0.84rem;
+  color: var(--ink-primary);
+  line-height: 1.55;
+}
+
+@keyframes recipeFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+  .recipe-modal-card {
+    padding: 30px 20px;
+  }
+  .recipe-modal-body {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .recipe-modal-title {
+    font-size: 1.7rem;
+  }
+  .recipe-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

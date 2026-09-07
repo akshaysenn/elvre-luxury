@@ -1,26 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  FaShoppingCart, FaBars, FaTimes, FaHome, FaUser,
-  FaSignOutAlt, FaListAlt, FaStore, FaInfoCircle, FaPhone, FaBlog,
-  FaEllipsisV, FaQuoteLeft, FaFileAlt, FaShieldAlt, FaQuestionCircle,
-  FaWhatsapp, FaHeart
+  FaShoppingCart, FaBars, FaTimes, FaUser,
+  FaSignOutAlt, FaListAlt, FaHeart, FaSearch
 } from "react-icons/fa";
-import SearchBar from "./SearchBar";
 import CartDrawer from "./CartDrawer";
 import "./Navbar.css";
 
 const Navbar = ({ onOpenHelp }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const dropdownRef = useRef(null);
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const navigate = useNavigate();
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     loadCartCount();
@@ -30,19 +36,15 @@ const Navbar = ({ onOpenHelp }) => {
     return () => {
       window.removeEventListener("storage", loadCartCount);
       window.removeEventListener("storage", checkLoginStatus);
-      document.body.classList.remove('mobile-menu-open');
+      document.body.classList.remove("mobile-nav-lock");
     };
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchOpen]);
 
   const loadCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -56,10 +58,10 @@ const Navbar = ({ onOpenHelp }) => {
       try {
         const parsed = JSON.parse(user);
         setIsLoggedIn(true);
-        setUserName(parsed.name || parsed.email || "User");
+        setUserName(parsed.name || parsed.email || "Member");
       } catch {
         setIsLoggedIn(true);
-        setUserName("User");
+        setUserName("Member");
       }
     } else {
       setIsLoggedIn(false);
@@ -72,251 +74,327 @@ const Navbar = ({ onOpenHelp }) => {
     localStorage.removeItem("adminLoggedIn");
     setIsLoggedIn(false);
     window.dispatchEvent(new Event("storage"));
-    window.location.href = "/";
+    closeMenu();
+    navigate("/");
   };
 
   const toggleMenu = () => {
-    const newState = !isOpen;
-    setIsOpen(newState);
-    setIsDropdownOpen(false);
-    if (newState) {
-      document.body.classList.add('mobile-menu-open');
+    const next = !isOpen;
+    setIsOpen(next);
+    if (next) {
+      document.body.classList.add("mobile-nav-lock");
     } else {
-      document.body.classList.remove('mobile-menu-open');
+      document.body.classList.remove("mobile-nav-lock");
     }
   };
 
   const closeMenu = () => {
     setIsOpen(false);
-    setIsDropdownOpen(false);
-    document.body.classList.remove('mobile-menu-open');
+    document.body.classList.remove("mobile-nav-lock");
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const openHelp = () => {
-    if (onOpenHelp) {
-      onOpenHelp();
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+      closeMenu();
     }
-    window.dispatchEvent(new CustomEvent("open-elvre-chatbot"));
   };
 
-  const openCartDrawer = () => setIsCartOpen(true);
-  const closeCartDrawer = () => setIsCartOpen(false);
+  const handleNavClick = (anchorId) => {
+    closeMenu();
+    if (location.pathname === "/") {
+      const el = document.getElementById(anchorId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate(`/#${anchorId}`);
+    }
+  };
 
   return (
     <>
-      <nav className="navbar">
-        <div className="nav-container">
+      <header className={`elvre-navbar-wrap ${isScrolled ? "scrolled" : ""}`}>
+        <div className="elvre-nav-inner">
           {/* LOGO */}
-          <Link to="/" className="nav-logo" onClick={closeMenu}>
+          <Link to="/" className="elvre-nav-logo" onClick={closeMenu}>
             <img
-              src={`${process.env.PUBLIC_URL}/assets/ELVRElogo1.png`}
-              alt="ELVRE Logo"
-              className="logo-img"
+              src={`${process.env.PUBLIC_URL}/assets/Blackelvre.png`}
+              alt="ELVRE - Nature's Sweet Flow"
+              className="logo-mark"
             />
           </Link>
 
-          {/* SEARCH BAR - CENTER */}
-          <div className="nav-search">
-            <SearchBar />
-          </div>
-
-          {/* DESKTOP MENU */}
-          <div className="desktop-menu">
-            {isHomePage ? (
-              <ScrollLink to="hero" smooth={true} duration={500} spy={true} offset={-70} className="nav-link active">
-                <FaHome className="nav-icon" /> Home
-              </ScrollLink>
-            ) : (
-              <Link to="/" className="nav-link">
-                <FaHome className="nav-icon" /> Home
-              </Link>
-            )}
-
-            <Link to="/products" className="nav-link">
-              <FaStore className="nav-icon" /> Products
+          {/* DESKTOP NAVIGATION LINKS */}
+          <nav className="elvre-desktop-nav" aria-label="Main Navigation">
+            <Link to="/products" className="nav-item-link" data-cursor="SHOP">
+              Shop
             </Link>
+            <button
+              onClick={() => handleNavClick("our-story")}
+              className="nav-item-link"
+              data-cursor="EXPLORE"
+            >
+              Our Story
+            </button>
+            <button
+              onClick={() => handleNavClick("how-it-is-made")}
+              className="nav-item-link"
+              data-cursor="PROCESS"
+            >
+              How It's Made
+            </button>
+            <button
+              onClick={() => handleNavClick("why-jaggery")}
+              className="nav-item-link"
+              data-cursor="READ"
+            >
+              Why Jaggery
+            </button>
+            <button
+              onClick={() => handleNavClick("recipes")}
+              className="nav-item-link"
+              data-cursor="RECIPES"
+            >
+              Recipes
+            </button>
+            <button
+              onClick={() => handleNavClick("contact")}
+              className="nav-item-link"
+              data-cursor="TALK"
+            >
+              Contact
+            </button>
+          </nav>
 
-            <Link to="/wishlist" className="nav-link wishlist-link">
-              <FaHeart className="nav-icon" /> Wishlist
-            </Link>
-
-            {/* Cart button – opens drawer */}
-            <button className="cart-link" onClick={openCartDrawer}>
-              <FaShoppingCart />
-              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+          {/* DESKTOP UTILITIES */}
+          <div className="elvre-nav-actions">
+            {/* Search Trigger */}
+            <button
+              className="nav-action-btn search-trigger"
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Search products"
+              title="Search"
+            >
+              <FaSearch />
             </button>
 
-            <div className="dropdown" ref={dropdownRef}>
-              <button className="dropdown-btn" onClick={toggleDropdown}>
-                <FaEllipsisV className="more-icon" />
-              </button>
-              {isDropdownOpen && (
-                <div className="dropdown-content">
-                  <div className="dropdown-header">More pages</div>
-                  <button className="dropdown-help-btn" onClick={() => { openHelp(); closeMenu(); }}>
-                    <FaQuestionCircle /> Help
-                  </button>
-                  {/* ✅ Our Story is now here */}
-                  <Link to="/our-story" onClick={closeMenu}><FaInfoCircle /> Our Story</Link>
-                  {isHomePage ? (
-                    <>
-                      <ScrollLink to="about" smooth={true} duration={500} onClick={closeMenu}>
-                        <FaInfoCircle /> About
-                      </ScrollLink>
-                      <ScrollLink to="testimonial" smooth={true} duration={500} onClick={closeMenu}>
-                        <FaQuoteLeft /> Testimonials
-                      </ScrollLink>
-                      <ScrollLink to="contact" smooth={true} duration={500} onClick={closeMenu}>
-                        <FaPhone /> Contact
-                      </ScrollLink>
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/blog" onClick={closeMenu}><FaBlog /> Blog</Link>
-                    </>
-                  )}
-                  <Link to="/terms" onClick={closeMenu}><FaFileAlt /> Terms &amp; Conditions</Link>
-                  <Link to="/privacy" onClick={closeMenu}><FaShieldAlt /> Privacy Policy</Link>
-                  {isLoggedIn && (
-                    <Link to="/my-orders" onClick={closeMenu}>
-                      <FaListAlt /> My Orders
-                    </Link>
-                  )}
-                  {isLoggedIn && (
-                    <button onClick={handleLogout} className="dropdown-logout">
-                      <FaSignOutAlt /> Logout
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
+            {/* Wishlist */}
+            <Link
+              to="/wishlist"
+              className="nav-action-btn wishlist-btn"
+              aria-label="Wishlist"
+              title="Wishlist"
+            >
+              <FaHeart />
+            </Link>
 
-            {isLoggedIn && (
-              <Link to="/profile" className="profile-link"><FaUser /></Link>
-            )}
-            {!isLoggedIn && (
-              <Link to="/login" className="login-btn-nav">Login</Link>
-            )}
-          </div>
-
-          {/* MOBILE ICONS */}
-          <div className="mobile-icons">
-            <div className="mobile-search-compact">
-              <SearchBar />
-            </div>
-            <button className="mobile-cart" onClick={openCartDrawer}>
-              <FaShoppingCart />
-              {cartCount > 0 && <span className="cart-count-mobile">{cartCount}</span>}
-            </button>
-            <div className="mobile-icon" onClick={toggleMenu}>
-              {isOpen ? <FaTimes /> : <FaBars />}
-            </div>
-          </div>
-
-          {/* MOBILE MENU – keep Our Story here, it's fine */}
-          <div className={`mobile-menu ${isOpen ? "open" : ""}`}>
-            <div className="mobile-menu-inner">
-              <div className="mob-user-row">
-                <div className="mob-avatar">
-                  {isLoggedIn ? userName.charAt(0).toUpperCase() : "?"}
-                </div>
-                <div>
-                  <div className="mob-user-name">{isLoggedIn ? userName : "Guest"}</div>
-                  <div className="mob-user-role">{isLoggedIn ? "Member" : "Please login"}</div>
-                </div>
-              </div>
-
-              <Link to="/" onClick={toggleMenu} className="mob-link">
-                <FaHome /> Home
-              </Link>
-              <Link to="/products" onClick={toggleMenu} className="mob-link">
-                <FaStore /> Products
-              </Link>
-              <Link to="/wishlist" onClick={toggleMenu} className="mob-link">
-                <FaHeart /> Wishlist
-              </Link>
-
-              <button className="mob-link mob-help-btn" onClick={() => { openHelp(); toggleMenu(); }}>
-                <FaQuestionCircle /> Help
-              </button>
-
-              <a
-                href="https://wa.me/917906396629"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mob-link"
-                onClick={toggleMenu}
+            {/* User Profile / Login */}
+            {isLoggedIn ? (
+              <Link
+                to="/profile"
+                className="nav-action-btn user-btn logged-in"
+                aria-label="Account"
+                title={userName}
               >
-                <FaWhatsapp /> WhatsApp
-              </a>
-
-              {/* ✅ Our Story is also in mobile menu (kept for mobile users) */}
-              <Link to="/our-story" onClick={toggleMenu} className="mob-link">
-                <FaInfoCircle /> Our Story
+                <FaUser />
               </Link>
-
-              {isHomePage ? (
-                <>
-                  <ScrollLink to="about" smooth={true} duration={500} onClick={toggleMenu} className="mob-link">
-                    <FaInfoCircle /> About Us
-                  </ScrollLink>
-                  <ScrollLink to="testimonial" smooth={true} duration={500} onClick={toggleMenu} className="mob-link">
-                    <FaQuoteLeft /> Testimonials
-                  </ScrollLink>
-                  <ScrollLink to="contact" smooth={true} duration={500} onClick={toggleMenu} className="mob-link">
-                    <FaPhone /> Contact Us
-                  </ScrollLink>
-                </>
-              ) : (
-                <>
-                  <Link to="/blog" onClick={toggleMenu} className="mob-link">
-                    <FaBlog /> Blog
-                  </Link>
-                </>
-              )}
-
-              <hr className="mob-divider" />
-
-              <Link to="/terms" onClick={toggleMenu} className="mob-link">
-                <FaFileAlt /> Terms &amp; Conditions
+            ) : (
+              <Link
+                to="/login"
+                className="nav-login-link"
+                title="Account Login"
+              >
+                Login
               </Link>
-              <Link to="/privacy" onClick={toggleMenu} className="mob-link">
-                <FaShieldAlt /> Privacy Policy
-              </Link>
+            )}
 
-              <hr className="mob-divider" />
+            {/* Cart Trigger */}
+            <button
+              className="nav-action-btn cart-btn"
+              onClick={() => setIsCartOpen(true)}
+              aria-label={`Cart with ${cartCount} items`}
+              data-cursor="CART"
+            >
+              <FaShoppingCart />
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            </button>
 
-              {isLoggedIn && (
-                <Link to="/my-orders" onClick={toggleMenu} className="mob-link">
-                  <FaListAlt /> My Orders
-                </Link>
-              )}
-              {isLoggedIn && (
-                <Link to="/profile" onClick={toggleMenu} className="mob-link">
-                  <FaUser /> My Profile
-                </Link>
-              )}
+            {/* Primary CTA */}
+            <Link
+              to="/products"
+              className="nav-cta-btn"
+              data-cursor="BUY"
+            >
+              Shop Now
+              <span className="arrow-glyph">→</span>
+            </Link>
 
-              {!isLoggedIn ? (
-                <Link to="/login" onClick={toggleMenu} className="mob-link mob-login-btn">
-                  <FaUser /> Login / Signup
-                </Link>
-              ) : (
-                <button onClick={handleLogout} className="mob-link mob-logout-btn">
-                  <FaSignOutAlt /> Logout
+            {/* Mobile Hamburger */}
+            <button
+              className="mobile-toggle-btn"
+              onClick={toggleMenu}
+              aria-label="Toggle navigation menu"
+            >
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* SEARCH OVERLAY */}
+      {isSearchOpen && (
+        <div className="elvre-search-overlay" onClick={() => setIsSearchOpen(false)}>
+          <div
+            className="search-overlay-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="search-overlay-close"
+              onClick={() => setIsSearchOpen(false)}
+              aria-label="Close search"
+            >
+              <FaTimes />
+            </button>
+            <form onSubmit={handleSearchSubmit} className="search-overlay-form">
+              <span className="search-eyebrow">Search ELVRE</span>
+              <div className="search-input-wrap">
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="e.g. Cane Jaggery, 500g, Organic, Tea..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-overlay-input"
+                />
+                <button type="submit" className="search-overlay-submit">
+                  Search →
                 </button>
-              )}
+              </div>
+            </form>
+            <div className="search-overlay-quicklinks">
+              <span>Popular:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  navigate("/products?search=cane");
+                  setIsSearchOpen(false);
+                }}
+              >
+                Cane Jaggery Powder
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  navigate("/products?search=powder");
+                  setIsSearchOpen(false);
+                }}
+              >
+                100% Unrefined
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  navigate("/products?search=gift");
+                  setIsSearchOpen(false);
+                }}
+              >
+                Gift Packs
+              </button>
             </div>
           </div>
         </div>
-      </nav>
+      )}
 
-      {/* Cart Drawer */}
-      <CartDrawer isOpen={isCartOpen} onClose={closeCartDrawer} />
+      {/* FULL-SCREEN MOBILE NAVIGATION */}
+      <div className={`elvre-mobile-drawer ${isOpen ? "open" : ""}`}>
+        <div className="mobile-drawer-header">
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/Blackelvre.png`}
+            alt="ELVRE"
+            className="mobile-logo"
+          />
+          <button
+            className="mobile-close-btn"
+            onClick={closeMenu}
+            aria-label="Close menu"
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        <nav className="mobile-drawer-nav">
+          <Link to="/products" onClick={closeMenu} className="mobile-nav-link">
+            <span>01</span> Shop Collection
+          </Link>
+          <button
+            onClick={() => handleNavClick("our-story")}
+            className="mobile-nav-link"
+          >
+            <span>02</span> Our Story
+          </button>
+          <button
+            onClick={() => handleNavClick("how-it-is-made")}
+            className="mobile-nav-link"
+          >
+            <span>03</span> How It's Made
+          </button>
+          <button
+            onClick={() => handleNavClick("why-jaggery")}
+            className="mobile-nav-link"
+          >
+            <span>04</span> Why Jaggery
+          </button>
+          <button
+            onClick={() => handleNavClick("recipes")}
+            className="mobile-nav-link"
+          >
+            <span>05</span> Kitchen Recipes
+          </button>
+          <button
+            onClick={() => handleNavClick("contact")}
+            className="mobile-nav-link"
+          >
+            <span>06</span> Contact Us
+          </button>
+        </nav>
+
+        <div className="mobile-drawer-footer">
+          <div className="mobile-user-row">
+            {isLoggedIn ? (
+              <div className="user-pill">
+                <span>Hello, {userName}</span>
+                <Link to="/my-orders" onClick={closeMenu} className="sub-link">
+                  <FaListAlt /> Orders
+                </Link>
+                <button onClick={handleLogout} className="logout-btn">
+                  <FaSignOutAlt /> Log out
+                </button>
+              </div>
+            ) : (
+              <div className="guest-row">
+                <Link to="/login" onClick={closeMenu} className="mobile-login-btn">
+                  Sign In / Register
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <div className="mobile-bottom-links">
+            <Link to="/terms" onClick={closeMenu}>Terms</Link>
+            <span>•</span>
+            <Link to="/privacy" onClick={closeMenu}>Privacy</Link>
+            <span>•</span>
+            <a href="mailto:elvreofficals@gmail.com">elvreofficals@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      {/* CART DRAWER */}
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 };

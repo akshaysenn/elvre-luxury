@@ -41,6 +41,8 @@ import BackToTop from "./components/BackToTop";
 import WhatsApp from "./components/WhatsApp";
 import Chatbot from "./components/Chatbot";
 
+import CustomCursor from "./components/CustomCursor";
+
 // ============================================
 // Protected Route
 // ============================================
@@ -58,6 +60,7 @@ const ProtectedRoute = ({ children }) => {
 // ============================================
 const Layout = ({ children, isChatbotOpen, setIsChatbotOpen }) => (
   <>
+    <CustomCursor />
     <Navbar onOpenHelp={() => setIsChatbotOpen(true)} />
     {children}
     <Chatbot isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} />
@@ -97,9 +100,10 @@ function App() {
   // ─── AOS INIT ───
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 700,
       once: true,
-      offset: 100,
+      offset: 80,
+      easing: 'ease-out-cubic',
       disable: false,
     });
   }, []);

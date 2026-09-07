@@ -1,51 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import CountUp from "react-countup";
 import "./StatsCounter.css";
 
+const statsData = [
+  {
+    icon: "🌱",
+    value: 100,
+    suffix: "%",
+    label: "Natural & Chemical Free",
+    subtext: "Unbleached and unrefined sweetness"
+  },
+  {
+    icon: "🏡",
+    value: 5000,
+    suffix: "+",
+    label: "Happy Kitchens",
+    subtext: "Delivered across India"
+  },
+  {
+    icon: "👨‍🌾",
+    value: 100,
+    suffix: "%",
+    label: "Farmer Handcrafted",
+    subtext: "Directly supporting regional growers"
+  },
+  {
+    icon: "📦",
+    value: 24,
+    suffix: "/7",
+    label: "Care & Support",
+    subtext: "Dedicated customer service"
+  }
+];
+
 const StatsCounter = () => {
-  const [stats, setStats] = useState({
-    natural: 100,
-    customers: 5000,
-    farmerMade: 100,
-    support: 24
-  });
-
-  useEffect(() => {
-    // You can fetch real stats from Supabase here
-  }, []);
-
   return (
-    <section className="stats-section">
-      <div className="stats-container">
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon">🌿</div>
-            <div className="stat-number">
-              <CountUp end={stats.natural} duration={2.5} />%
+    <section className="elvre-stats-section">
+      <div className="elvre-container">
+        <div className="stats-cards-grid">
+          {statsData.map((stat, idx) => (
+            <div
+              key={idx}
+              className="stat-metric-card"
+              data-aos="fade-up"
+              data-aos-delay={idx * 70}
+            >
+              <div className="stat-icon-wrapper">{stat.icon}</div>
+              <div className="stat-number-wrap font-serif">
+                <CountUp end={stat.value} duration={2.4} enableScrollSpy scrollSpyOnce />
+                <span className="stat-suffix">{stat.suffix}</span>
+              </div>
+              <h4 className="stat-metric-label">{stat.label}</h4>
+              <p className="stat-metric-sub">{stat.subtext}</p>
             </div>
-            <div className="stat-label">Natural & Chemical Free</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">😊</div>
-            <div className="stat-number">
-              <CountUp end={stats.customers} duration={2.5} />+
-            </div>
-            <div className="stat-label">Happy Customers</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">👨‍🌾</div>
-            <div className="stat-number">
-              <CountUp end={stats.farmerMade} duration={2.5} />%
-            </div>
-            <div className="stat-label">Farmer Made</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">🕐</div>
-            <div className="stat-number">
-              <CountUp end={stats.support} duration={2.5} />/7
-            </div>
-            <div className="stat-label">Customer Support</div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

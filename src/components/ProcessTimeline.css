@@ -1,0 +1,310 @@
+/* ============================================
+   ELVRE — FROM CANE TO POWDER TIMELINE STYLING
+   ============================================ */
+
+.elvre-process-section {
+  padding: 110px 0 90px;
+  background: var(--canvas-paper);
+  border-top: 1px solid rgba(83, 49, 26, 0.06);
+  border-bottom: 1px solid rgba(83, 49, 26, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.process-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* FARM TO KITCHEN PILLS STRIP */
+.farm-to-kitchen-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.flow-node {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(200, 157, 92, 0.3);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--jaggery-dark);
+  box-shadow: 0 2px 8px rgba(35, 23, 14, 0.04);
+}
+
+.flow-arrow {
+  color: var(--gold-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* TIMELINE STEPPER */
+.timeline-stepper-wrap {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto 48px;
+  padding: 10px 0;
+}
+
+.timeline-progress-track {
+  position: absolute;
+  top: 24px;
+  left: 6%;
+  right: 6%;
+  height: 2px;
+  background: rgba(83, 49, 26, 0.12);
+  z-index: 1;
+}
+
+.timeline-progress-bar {
+  height: 100%;
+  background: var(--jaggery-dark);
+  transition: width 0.4s var(--ease-editorial);
+}
+
+.timeline-steps-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.timeline-step-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 0 8px;
+  transition: transform 0.2s ease;
+}
+
+.step-btn-num {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--canvas-ivory);
+  border: 2px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  transition: all 0.3s ease;
+}
+
+.step-btn-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: color 0.3s ease;
+}
+
+.timeline-step-btn.visited .step-btn-num {
+  border-color: var(--jaggery-dark);
+  color: var(--jaggery-dark);
+}
+
+.timeline-step-btn.active .step-btn-num {
+  background: var(--jaggery-dark);
+  border-color: var(--jaggery-dark);
+  color: var(--canvas-ivory);
+  box-shadow: 0 4px 14px rgba(61, 35, 18, 0.3);
+  transform: scale(1.12);
+}
+
+.timeline-step-btn.active .step-btn-title {
+  color: var(--jaggery-dark);
+  font-weight: 700;
+}
+
+/* SHOWCASE STAGE */
+.process-showcase-stage {
+  max-width: 1080px;
+  margin: 0 auto;
+  background: var(--canvas-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.showcase-content-col {
+  padding: 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.showcase-step-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(83, 49, 26, 0.06);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.showcase-title {
+  font-size: 2.1rem;
+  color: var(--jaggery-dark);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.showcase-desc {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.showcase-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--forest-primary);
+  background: var(--sage-pale);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: 36px;
+  align-self: flex-start;
+}
+
+.stat-dot {
+  color: var(--gold-dark);
+}
+
+/* CONTROLS */
+.showcase-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.step-nav-arrow {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--jaggery-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.step-nav-arrow:hover:not(:disabled) {
+  background: var(--jaggery-dark);
+  color: #fff;
+  border-color: var(--jaggery-dark);
+}
+
+.step-nav-arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.step-counter-text {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+/* MEDIA */
+.showcase-media-col {
+  background: var(--canvas-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.showcase-image-frame {
+  width: 100%;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.showcase-main-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 28px rgba(35, 23, 14, 0.16));
+  transition: transform 0.4s ease;
+}
+
+.showcase-media-col:hover .showcase-main-img {
+  transform: scale(1.04);
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .process-showcase-stage {
+    grid-template-columns: 1fr;
+  }
+  .showcase-media-col {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding: 30px;
+  }
+  .showcase-image-frame {
+    height: 280px;
+  }
+  .showcase-content-col {
+    padding: 36px 28px;
+  }
+  .step-btn-title {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .elvre-process-section {
+    padding: 70px 0 50px;
+  }
+  .showcase-title {
+    font-size: 1.6rem;
+  }
+  .farm-to-kitchen-pills {
+    display: none;
+  }
+  .timeline-progress-track {
+    left: 10%;
+    right: 10%;
+  }
+}

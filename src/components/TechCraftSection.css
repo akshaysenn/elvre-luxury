@@ -1,0 +1,209 @@
+/* ============================================
+   ELVRE — WHERE TRADITION MEETS TECHNOLOGY
+   ============================================ */
+
+.elvre-tech-craft-section {
+  padding: 100px 0 90px;
+  background: var(--canvas-paper);
+  position: relative;
+  border-top: 1px solid rgba(83, 49, 26, 0.06);
+  border-bottom: 1px solid rgba(83, 49, 26, 0.06);
+}
+
+.tech-craft-header {
+  text-align: center;
+  max-width: 740px;
+  margin: 0 auto 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tech-craft-toggle-pills {
+  display: flex;
+  gap: 10px;
+  background: var(--canvas-ivory);
+  padding: 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-medium);
+  margin-top: 28px;
+}
+
+.toggle-pill {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.toggle-pill:hover {
+  color: var(--jaggery-dark);
+}
+
+.toggle-pill.active {
+  background: var(--jaggery-dark);
+  color: var(--canvas-ivory);
+  box-shadow: 0 4px 12px rgba(61, 35, 18, 0.2);
+}
+
+/* DUAL STAGE */
+.tech-craft-dual-stage {
+  display: grid;
+  grid-template-columns: 1fr 120px 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pillar-card {
+  background: var(--canvas-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 40px 36px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.35s ease;
+}
+
+.pillar-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(200, 157, 92, 0.3);
+  transform: translateY(-4px);
+}
+
+.pillar-card.dimmed {
+  opacity: 0.45;
+  filter: grayscale(40%);
+}
+
+.pillar-header {
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 18px;
+}
+
+.pillar-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 6px;
+}
+
+.pillar-title {
+  font-size: 1.75rem;
+  color: var(--jaggery-dark);
+}
+
+.pillar-features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pillar-features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.bullet-glow {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.pillar-features-list li strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--jaggery-dark);
+  margin-bottom: 4px;
+}
+
+.pillar-features-list li p {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* CENTER CONNECTOR */
+.pillar-connector-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.connector-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--canvas-ivory);
+  border: 2px dashed var(--gold-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(35, 23, 14, 0.06);
+}
+
+.connector-spark {
+  color: var(--gold-dark);
+  font-size: 1.1rem;
+}
+
+.connector-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jaggery-dark);
+  margin-top: 2px;
+}
+
+/* QUOTE BANNER */
+.tech-craft-quote-banner {
+  margin-top: 60px;
+  text-align: center;
+  padding: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.quote-statement {
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--jaggery-dark);
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .tech-craft-dual-stage {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .pillar-connector-center {
+    display: none;
+  }
+  .tech-craft-toggle-pills {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .pillar-card {
+    padding: 28px 20px;
+  }
+  .pillar-title {
+    font-size: 1.45rem;
+  }
+}

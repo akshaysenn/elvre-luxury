@@ -1,0 +1,118 @@
+/* ============================================
+   ELVRE — FINAL CTA SECTION STYLING
+   ============================================ */
+
+.elvre-final-cta-section {
+  padding: 60px 0 100px;
+  background-color: var(--canvas-ivory);
+}
+
+.final-cta-card {
+  background: var(--jaggery-dark);
+  border-radius: var(--radius-xl);
+  padding: 70px 60px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 40px;
+  box-shadow: 0 24px 60px rgba(61, 35, 18, 0.25);
+  border: 1px solid rgba(200, 157, 92, 0.3);
+}
+
+.final-cta-glow {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 157, 92, 0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.final-cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-tag {
+  color: var(--gold-light);
+  margin-bottom: 16px;
+}
+
+.final-cta-headline {
+  font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+  line-height: 1.1;
+  color: var(--canvas-ivory);
+  margin-bottom: 20px;
+  letter-spacing: -0.015em;
+}
+
+.final-cta-headline span {
+  font-style: italic;
+  color: var(--gold-light);
+  font-weight: 400;
+}
+
+.final-cta-subtext {
+  font-size: 1.05rem;
+  color: #D5C8B4;
+  line-height: 1.65;
+  margin-bottom: 36px;
+  max-width: 500px;
+}
+
+.final-cta-btn {
+  font-size: 0.92rem;
+  padding: 16px 36px;
+}
+
+.final-cta-media {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.final-cta-product-img {
+  max-height: 360px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5));
+  transition: transform 0.5s var(--ease-editorial);
+}
+
+.final-cta-card:hover .final-cta-product-img {
+  transform: scale(1.05) rotate(1deg);
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .final-cta-card {
+    grid-template-columns: 1fr;
+    padding: 50px 32px;
+    text-align: center;
+  }
+  .final-cta-subtext {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .final-cta-product-img {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 500px) {
+  .final-cta-headline {
+    font-size: 2.2rem;
+  }
+  .final-cta-card {
+    padding: 40px 20px;
+  }
+  .final-cta-btn {
+    width: 100%;
+  }
+}

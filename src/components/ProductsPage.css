@@ -3,21 +3,8 @@
    Palette: Forest green / Jaggery brown / Gold accent
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600;700&display=swap');
+/* Tokens inherited from index.css :root — no local :root needed */
 
-:root {
-  --forest: #1F3B2C;
-  --forest-deep: #142A1F;
-  --sage: #7C9A79;
-  --sage-light: #E7EEE3;
-  --brown: #8B5E3C;
-  --brown-dark: #6d4a2e;
-  --gold: #C68A3D;
-  --cream: #FBF6EC;
-  --paper: #F3ECDD;
-  --ink: #241F17;
-  --ink-soft: #6b6153;
-}
 
 .products-page,
 .products-page *,

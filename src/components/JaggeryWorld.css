@@ -1,0 +1,211 @@
+/* ============================================
+   ELVRE — 2.5D INTERACTIVE JAGGERY WORLD
+   ============================================ */
+
+.elvre-jaggery-world-section {
+  position: relative;
+  min-height: 750px;
+  padding: 100px 0 90px;
+  background: #181410;
+  color: var(--canvas-ivory);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.world-ambient-light {
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 157, 92, 0.28) 0%, rgba(200, 157, 92, 0.05) 50%, transparent 75%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* PARTICLES */
+.world-particles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.w-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold-light);
+  opacity: 0.4;
+  animation: worldFloat 9s infinite ease-in-out;
+}
+
+.wp1 { width: 5px; height: 5px; top: 30%; left: 20%; animation-duration: 7s; }
+.wp2 { width: 8px; height: 8px; top: 70%; left: 45%; animation-duration: 11s; animation-delay: 1s; }
+.wp3 { width: 4px; height: 4px; top: 40%; right: 25%; animation-duration: 9s; animation-delay: 2s; }
+.wp4 { width: 6px; height: 6px; top: 20%; right: 15%; animation-duration: 12s; }
+.wp5 { width: 7px; height: 7px; top: 80%; right: 40%; animation-duration: 8s; animation-delay: 3s; }
+
+@keyframes worldFloat {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-20px); opacity: 0.7; }
+}
+
+.world-content-wrap {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.world-header-center {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 50px;
+}
+
+.world-header-center .eyebrow-tag {
+  color: var(--gold-light);
+}
+
+.world-header-center .section-heading-editorial {
+  color: var(--canvas-ivory);
+}
+
+.world-header-center .section-subtext {
+  color: #B5AA9C;
+}
+
+/* STAGE BOX */
+.world-stage-box {
+  position: relative;
+  height: 480px;
+  max-width: 980px;
+  margin: 0 auto;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.world-layer {
+  position: absolute;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* BACK FOLIAGE */
+.layer-back-foliage {
+  bottom: 0;
+  left: -20px;
+  right: -20px;
+  z-index: 1;
+}
+
+.foliage-back-img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  opacity: 0.45;
+  filter: brightness(0.7);
+}
+
+/* HERO PRODUCT */
+.layer-product-hero {
+  z-index: 4;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.world-hero-pack {
+  max-height: 380px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+}
+
+.pack-pedestal-light {
+  position: absolute;
+  bottom: -20px;
+  width: 280px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(200, 157, 92, 0.4) 0%, transparent 70%);
+  filter: blur(8px);
+}
+
+/* BOWL ACCENT */
+.layer-bowl-floating {
+  bottom: 10px;
+  right: 60px;
+  z-index: 5;
+}
+
+.world-bowl-img {
+  width: 190px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
+}
+
+/* STAMP OVERLAY */
+.world-editorial-stamp {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  z-index: 6;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.stamp-sub {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 2px;
+}
+
+.stamp-main {
+  font-size: 2.5rem;
+  color: var(--canvas-ivory);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  .world-stage-box {
+    height: 380px;
+  }
+  .world-hero-pack {
+    max-height: 280px;
+  }
+  .world-bowl-img {
+    width: 130px;
+    right: 20px;
+  }
+  .stamp-main {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .elvre-jaggery-world-section {
+    min-height: 600px;
+    padding: 70px 0;
+  }
+  .world-editorial-stamp {
+    position: static;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .world-bowl-img {
+    display: none;
+  }
+}

@@ -2,7 +2,8 @@
    ELVRE CHECKOUT — premium, brand-matched
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600;700&display=swap');
+/* Google Fonts loaded globally in index.css */
+
 
 .checkout-page,
 .checkout-page *,

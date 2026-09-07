@@ -1,0 +1,197 @@
+/* ============================================
+   ELVRE — BRAND STORY SECTION
+   ============================================ */
+
+.elvre-story-section {
+  padding: 120px 0 100px;
+  background-color: var(--canvas-ivory);
+  position: relative;
+}
+
+.story-grid-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* LEFT COLUMN */
+.story-editorial-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.story-lead-quote {
+  position: relative;
+  margin: 18px 0 28px;
+  padding-left: 32px;
+  border-left: 2px solid var(--gold-primary);
+}
+
+.quote-mark {
+  position: absolute;
+  top: -14px;
+  left: 12px;
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  color: var(--gold-primary);
+  line-height: 1;
+  opacity: 0.6;
+}
+
+.story-lead-quote p {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-style: italic;
+  color: var(--jaggery-dark);
+  line-height: 1.35;
+}
+
+.story-body-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  margin-bottom: 32px;
+}
+
+.story-body-paragraphs strong {
+  color: var(--jaggery-dark);
+}
+
+.founder-credentials-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.credential-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--canvas-paper);
+  border: 1px solid var(--border-medium);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--jaggery-dark);
+}
+
+.story-cta-wrap {
+  display: flex;
+  align-items: center;
+}
+
+/* RIGHT COLUMN */
+.story-visual-col {
+  position: relative;
+}
+
+.story-image-composition {
+  position: relative;
+  width: 100%;
+}
+
+.main-image-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  border: 1px solid var(--border-subtle);
+}
+
+.story-main-img {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--ease-editorial);
+}
+
+.main-image-card:hover .story-main-img {
+  transform: scale(1.03);
+}
+
+.image-caption-pill {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+  background: rgba(23, 19, 15, 0.78);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.accent-quote-card {
+  position: absolute;
+  bottom: -32px;
+  left: -32px;
+  background: var(--canvas-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  max-width: 320px;
+  box-shadow: var(--shadow-hover);
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+.accent-quote-icon {
+  color: var(--gold-dark);
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.accent-quote-heading {
+  font-size: 1.15rem;
+  color: var(--jaggery-dark);
+  margin-bottom: 6px;
+}
+
+.accent-quote-text {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1080px) {
+  .story-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .accent-quote-card {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .elvre-story-section {
+    padding: 70px 0 50px;
+  }
+  .story-main-img {
+    height: 320px;
+  }
+  .story-lead-quote p {
+    font-size: 1.2rem;
+  }
+}

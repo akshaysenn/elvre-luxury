@@ -1,77 +1,97 @@
 /* ============================================
-   GLOBAL FONT - TIMES NEW ROMAN (AAPKI MARZI)
+   ELVRE — LUXURY D2C DESIGN SYSTEM
+   Single Source of Truth for Brand Tokens & Global Styles
    ============================================ */
-/* ✅ Yeh line maine bilkul nahi badali - Times New Roman hi rahega */
-body,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-span,
-div,
-li,
-a,
-button,
-input,
-textarea,
-select,
-label,
-option,
-article,
-section,
-header,
-footer,
-nav,
-main {
-  font-family: 'ProximaNovaRegular' !important;
-}
 
-/* Keep icon fonts safe */
-.react-icons,
-.fa,
-.fas,
-.far,
-.fab,
-.fal,
-.fad,
-.fa-solid,
-.fa-regular,
-.fa-brands,
-svg:not(.exclude-font) {
-  font-family: inherit !important;
-}
+/* ─── GOOGLE FONTS ─── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ============================================
-   THEME COLORS - GREEN + BROWN (Aapke colors)
-   ============================================ */
+/* ─── BRAND TOKENS ─── */
 :root {
-  --primary-green: #1a2e1e;
-  --primary-green-light: #2a4a2e;
-  --primary-brown: #8B5E3C;
-  --primary-brown-light: #a87a54;
-  --primary-brown-dark: #6d4a2e;
-  --gold: #f1a40f;
-  --gold-dark: #d4910e;
-  --white: #ffffff;
-  --light-bg: #f9f3e8;
-  --gray-light: #f5f5f5;
-  --text-dark: #1a1a1a;
-  --text-light: #666666;
-  
-  /* ⭐ NEW - Premium ke liye extra colors */
-  --cream-bg: #FCF9F5;
-  --shadow-soft: 0 8px 30px rgba(26, 46, 30, 0.08);
-  --shadow-hover: 0 15px 45px rgba(139, 94, 60, 0.15);
-  --border-radius-card: 20px;
+  /* Warm Earth & Jaggery Palette */
+  --jaggery-dark:     #3D2312;
+  --jaggery-primary:  #53311A;
+  --jaggery-mid:      #6F4224;
+  --jaggery-light:    #8E5933;
+  --jaggery-amber:    #B2743E;
+  --jaggery-glow:     rgba(111, 66, 36, 0.15);
+
+  /* Sugarcane Foliage & Forest Greens */
+  --forest-deep:      #13241A;
+  --forest-primary:   #1D3728;
+  --forest-mid:       #294B37;
+  --forest-sage:      #4D6E57;
+  --sage-pale:        #E4ECE6;
+  --sage-border:      rgba(41, 75, 55, 0.14);
+
+  /* Warm Indian Sunlight & Gold */
+  --gold-primary:     #C89D5C;
+  --gold-light:       #E5B876;
+  --gold-dark:        #A87E3E;
+  --gold-tint:        rgba(200, 157, 92, 0.12);
+  --gold-glow:        0 8px 32px rgba(200, 157, 92, 0.28);
+
+  /* Natural Canvas & Paper Backgrounds */
+  --canvas-ivory:     #FAF6F0;
+  --canvas-paper:     #F3ECE1;
+  --canvas-card:      #FFFFFF;
+  --canvas-card-warm: #FCF9F4;
+  --canvas-dark:      #17130F;
+
+  /* Editorial Typography Ink */
+  --ink-heavy:        #181410;
+  --ink-primary:      #2A231C;
+  --ink-soft:         #574C40;
+  --ink-muted:        #8C8072;
+  --ink-light:        #B5AA9C;
+  --ink-inverse:      #FAF6F0;
+
+  /* Architectural Borders */
+  --border-subtle:    rgba(83, 49, 26, 0.08);
+  --border-light:     #E8E0D2;
+  --border-medium:    #D5C8B4;
+  --border-gold:      rgba(200, 157, 92, 0.4);
+
+  /* Elevation & Shadows */
+  --shadow-sm:        0 2px 8px rgba(35, 23, 14, 0.04);
+  --shadow-md:        0 6px 24px rgba(35, 23, 14, 0.07);
+  --shadow-lg:        0 14px 40px rgba(35, 23, 14, 0.10);
+  --shadow-hover:     0 20px 50px rgba(35, 23, 14, 0.14);
+  --shadow-glow:      0 0 35px rgba(200, 157, 92, 0.22);
+
+  /* Radii */
+  --radius-xs:        4px;
+  --radius-sm:        8px;
+  --radius-md:        14px;
+  --radius-lg:        20px;
+  --radius-xl:        30px;
+  --radius-full:      9999px;
+
+  /* Animation Easing */
+  --ease-editorial:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth:      cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast:  all 0.2s ease;
+  --transition-mid:   all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow:  all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Fonts */
+  --font-serif:       'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-display:     'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-sans:        'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Backward Compatibility Aliases */
+  --forest:           var(--forest-primary);
+  --brown:            var(--jaggery-primary);
+  --gold:             var(--gold-primary);
+  --cream:            var(--canvas-ivory);
+  --paper:            var(--canvas-paper);
+  --white:            #ffffff;
+  --ink:              var(--ink-heavy);
+  --radius-pill:      var(--radius-full);
 }
 
-/* ============================================
-   GLOBAL RESET & BASE (Premium look ke liye)
-   ============================================ */
-* {
+/* ─── RESET & DEFAULTS ─── */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -79,26 +99,43 @@ svg:not(.exclude-font) {
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* ⭐ YEH ADD KIYA - White line fix */
+  font-size: 16px;
+  overflow-x: hidden;
+  background-color: var(--canvas-ivory);
 }
 
 body {
-  /* ⭐ Organic feel ke liye soft gradient background */
-  background: linear-gradient(180deg, #FCF9F5 0%, #F5EDE0 100%);
-  color: var(--text-dark);
-  line-height: 1.7;
+  font-family: var(--font-sans);
+  background-color: var(--canvas-ivory);
+  color: var(--ink-primary);
+  line-height: 1.68;
+  font-weight: 400;
   min-height: 100vh;
-  margin: 0; /* ⭐ YEH ADD KIYA - Browser default margin hatane ke liye */
-  padding: 0; /* ⭐ YEH ADD KIYA - Safe side ke liye */
-  overflow-x: hidden; /* ⭐ YEH ADD KIYA - White line fix */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
   width: 100%;
-  max-width: 100vw; /* ⭐ YEH ADD KIYA - Screen se zyada mat jao */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  selection-background-color: var(--gold-light);
+}
+
+::selection {
+  background: rgba(200, 157, 92, 0.28);
+  color: var(--jaggery-dark);
 }
 
 a {
-  text-decoration: none;
   color: inherit;
-  transition: all 0.3s ease;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
 }
 
 img {
@@ -107,150 +144,211 @@ img {
   display: block;
 }
 
-/* ============================================
-   GLOBAL CARD / CONTAINER (Premium Shadow)
-   ============================================ */
-.card-premium {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: var(--border-radius-card);
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(139, 94, 60, 0.1);
-  padding: 25px;
-  transition: all 0.4s ease;
+/* ─── LUXURY TYPOGRAPHY UTILITIES ─── */
+.font-serif {
+  font-family: var(--font-serif);
 }
 
-.card-premium:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--primary-brown-light);
+.font-sans {
+  font-family: var(--font-sans);
 }
 
-/* ============================================
-   BUTTONS - Premium & Organic
-   ============================================ */
-.btn-primary {
-  background: var(--primary-brown);
-  color: white;
-  border: none;
-  padding: 14px 36px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.4s ease;
+.eyebrow-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(139, 94, 60, 0.2);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
 }
 
-.btn-primary:hover {
-  background: var(--primary-brown-dark);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(139, 94, 60, 0.35);
+.eyebrow-tag::before,
+.eyebrow-tag::after {
+  content: '✦';
+  font-size: 0.65rem;
+  opacity: 0.7;
 }
 
-.btn-secondary {
-  background: var(--gold);
-  color: var(--primary-green);
-  border: none;
-  padding: 14px 36px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: all 0.4s ease;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(241, 164, 15, 0.25);
+.section-heading-editorial {
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--jaggery-dark);
+  letter-spacing: -0.015em;
+  margin-bottom: 16px;
 }
 
-.btn-secondary:hover {
-  background: var(--gold-dark);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(241, 164, 15, 0.4);
+.section-heading-editorial span {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-dark);
 }
 
-/* Outline Button (Naya add kiya) */
-.btn-outline {
-  background: transparent;
-  border: 2px solid var(--primary-brown);
-  color: var(--primary-brown);
-  padding: 12px 32px;
-  border-radius: 50px;
+.section-subtext {
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  color: var(--ink-soft);
+  max-width: 640px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* ─── BUTTONS ─── */
+.btn-luxury-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--jaggery-dark);
+  color: #FAF6F0;
+  padding: 14px 34px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
   font-weight: 600;
-  transition: 0.4s ease;
-  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: var(--transition-mid);
+  border: 1px solid var(--jaggery-dark);
+  box-shadow: 0 6px 20px rgba(61, 35, 18, 0.18);
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-outline:hover {
-  background: var(--primary-brown);
-  color: white;
+.btn-luxury-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transition: 0.6s ease;
+}
+
+.btn-luxury-primary:hover {
+  background: var(--jaggery-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(61, 35, 18, 0.28);
+}
+
+.btn-luxury-primary:hover::after {
+  left: 100%;
+}
+
+.btn-luxury-primary .btn-arrow {
+  transition: transform 0.3s var(--ease-editorial);
+}
+
+.btn-luxury-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-luxury-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--jaggery-dark);
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: var(--transition-mid);
+  border: 1px solid var(--border-medium);
+  backdrop-filter: blur(8px);
+}
+
+.btn-luxury-secondary:hover {
+  border-color: var(--jaggery-dark);
+  background: rgba(83, 49, 26, 0.05);
   transform: translateY(-2px);
 }
 
-/* ============================================
-   SECTION HEADERS - Premium feel
-   ============================================ */
-.section-title {
-  color: var(--primary-green);
-  font-size: 2.6rem;
+.btn-luxury-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--gold-primary);
+  color: var(--forest-deep);
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
   font-weight: 700;
-  text-align: center;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-  position: relative;
-}
-
-/* Title ke neeche decorative line (Golden) */
-.section-title::after {
-  content: '';
-  display: block;
-  width: 70px;
-  height: 4px;
-  background: var(--gold);
-  margin: 12px auto 0;
-  border-radius: 4px;
-}
-
-.section-subtitle {
-  color: var(--primary-brown-light);
-  font-size: 1.1rem;
-  letter-spacing: 4px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  text-align: center;
-  font-weight: 600;
+  transition: var(--transition-mid);
+  box-shadow: 0 6px 24px rgba(200, 157, 92, 0.3);
 }
 
-/* ============================================
-   CONTAINER
-   ============================================ */
-.container {
-  max-width: 1200px;
+.btn-luxury-gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(200, 157, 92, 0.45);
+}
+
+/* ─── CONTAINER & GRID SYSTEM ─── */
+.elvre-container {
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 32px;
 }
 
-/* ============================================
-   RESPONSIVE (Mobile friendly)
-   ============================================ */
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-  }
-  .section-title::after {
-    width: 50px;
-  }
-  .section-subtitle {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-  }
-  .btn-primary, .btn-secondary {
-    padding: 12px 28px;
+  .elvre-container {
+    padding: 0 20px;
   }
 }
 
-@media (max-width: 480px) {
-  .section-title {
-    font-size: 1.6rem;
-  }
-  .card-premium {
-    padding: 15px;
+/* ─── LUXURY CARD ─── */
+.elvre-card {
+  background: var(--canvas-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: var(--transition-mid);
+  box-shadow: var(--shadow-sm);
+}
+
+.elvre-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(200, 157, 92, 0.35);
+  transform: translateY(-4px);
+}
+
+/* ─── SCROLLBAR STYLING ─── */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--canvas-paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBB99F;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--canvas-paper);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* ─── ACCESSIBILITY: REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

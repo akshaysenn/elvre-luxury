@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTimes, FaMinus, FaPlus, FaTrash } from "react-icons/fa";
-import { useCart } from "../hooks/useCart"; // ⬅️ Hook import karo
+import { FaTimes, FaMinus, FaPlus, FaTrash, FaShoppingBag, FaLock } from "react-icons/fa";
+import { useCart } from "../hooks/useCart";
 import "./CartDrawer.css";
 
 const CartDrawer = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  
-  // Hook se saara data le lo
   const {
     cartItems,
     updateQuantity,
@@ -15,10 +13,24 @@ const CartDrawer = ({ isOpen, onClose }) => {
     subtotal,
     shipping,
     total
-  } = useCart(); // 🔥 Dhyaan rakho, isme `clearCart` nahi use kar rahe, kyunki drawer mein button nahi hai
+  } = useCart();
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen, onClose]);
 
   const handleCheckout = () => {
-    onClose(); // Drawer band karo
+    onClose();
     const user = localStorage.getItem("currentUser");
     if (!user) {
       localStorage.setItem("redirectAfterLogin", "/checkout");
@@ -28,97 +40,177 @@ const CartDrawer = ({ isOpen, onClose }) => {
     }
   };
 
+  const freeShippingThreshold = 499;
+  const amountToFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
+  const freeShippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
+
   return (
     <>
-      {/* Overlay */}
+      {/* OVERLAY */}
       <div
         className={`cart-drawer-overlay ${isOpen ? "active" : ""}`}
         onClick={onClose}
+        aria-hidden={!isOpen}
       />
 
-      {/* Drawer */}
-      <div className={`cart-drawer ${isOpen ? "open" : ""}`}>
+      {/* DRAWER */}
+      <aside
+        className={`cart-drawer-sheet ${isOpen ? "open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Shopping Cart Drawer"
+      >
+        {/* HEADER */}
         <div className="cart-drawer-header">
-          <h3>Your Cart</h3>
-          <button className="cart-drawer-close" onClick={onClose}>
+          <div className="header-title-block">
+            <FaShoppingBag className="cart-header-icon" />
+            <h3 className="font-serif">Your Cart</h3>
+            <span className="cart-item-count">
+              ({cartItems.reduce((acc, it) => acc + (it.quantity || 1), 0)} items)
+            </span>
+          </div>
+          <button className="cart-drawer-close-btn" onClick={onClose} aria-label="Close cart">
             <FaTimes />
           </button>
         </div>
 
+        {/* FREE SHIPPING PROGRESS BAR */}
+        <div className="cart-free-shipping-bar">
+          <div className="shipping-text-row">
+            {amountToFreeShipping > 0 ? (
+              <span>
+                Add <strong>₹{amountToFreeShipping}</strong> more for <strong>FREE Pan-India Delivery</strong>
+              </span>
+            ) : (
+              <span className="qualified-text">
+                🎉 Congratulations! You have qualified for <strong>FREE Delivery</strong>
+              </span>
+            )}
+          </div>
+          <div className="shipping-track">
+            <div
+              className="shipping-progress"
+              style={{ width: `${freeShippingProgress}%` }}
+            />
+          </div>
+        </div>
+
+        {/* BODY */}
         <div className="cart-drawer-body">
           {cartItems.length === 0 ? (
-            <div className="empty-cart-msg">
-              <p>Your cart is empty.</p>
-              <button className="continue-shopping" onClick={onClose}>
-                Continue Shopping
+            <div className="cart-empty-state">
+              <span className="empty-cart-emoji">🍯</span>
+              <h4 className="font-serif">Your cart is currently empty</h4>
+              <p>Discover the honest sweetness of unrefined cane jaggery.</p>
+              <button
+                type="button"
+                className="btn-luxury-primary"
+                onClick={() => {
+                  onClose();
+                  navigate("/products");
+                }}
+              >
+                Shop Collection →
               </button>
             </div>
           ) : (
-            <>
-              <div className="cart-items-list">
-                {cartItems.map((item) => {
-                  const price = item.priceValue || 0;
-                  const qty = item.quantity || 1;
-                  return (
-                    <div key={item.id} className="cart-drawer-item">
+            <div className="cart-items-scroll-list">
+              {cartItems.map((item) => {
+                const price = item.priceValue || 0;
+                const qty = item.quantity || 1;
+                return (
+                  <div key={item.id} className="cart-item-row">
+                    <div className="cart-item-thumb">
                       <img src={item.image} alt={item.name} />
-                      <div className="item-details">
-                        <h4>{item.name}</h4>
-                        <p>₹{price}</p>
-                        <div className="item-actions">
+                    </div>
+
+                    <div className="cart-item-info">
+                      <div className="item-title-row">
+                        <h4 className="cart-item-name">{item.name}</h4>
+                        <button
+                          type="button"
+                          className="cart-item-remove-btn"
+                          onClick={() => removeFromCart(item.id)}
+                          aria-label="Remove item"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+
+                      {item.variant && (
+                        <span className="cart-item-variant">Size: {item.variant}</span>
+                      )}
+
+                      <div className="cart-item-bottom-row">
+                        <div className="cart-qty-toggle">
                           <button
-                            className="qty-btn"
+                            type="button"
                             onClick={() => updateQuantity(item.id, qty - 1)}
+                            disabled={qty <= 1}
+                            aria-label="Decrease quantity"
                           >
                             <FaMinus />
                           </button>
                           <span>{qty}</span>
                           <button
-                            className="qty-btn"
+                            type="button"
                             onClick={() => updateQuantity(item.id, qty + 1)}
+                            aria-label="Increase quantity"
                           >
                             <FaPlus />
                           </button>
-                          <button
-                            className="remove-btn"
-                            onClick={() => removeFromCart(item.id)}
-                          >
-                            <FaTrash />
-                          </button>
+                        </div>
+
+                        <div className="cart-item-price-sum">
+                          <span className="cart-item-unit">₹{price} ea.</span>
+                          <span className="cart-item-subtotal">₹{price * qty}</span>
                         </div>
                       </div>
-                      <div className="item-total">₹{price * qty}</div>
                     </div>
-                  );
-                })}
-              </div>
-
-              <div className="cart-drawer-summary">
-                <div className="summary-row">
-                  <span>Subtotal</span>
-                  <span>₹{subtotal}</span>
-                </div>
-                <div className="summary-row">
-                  <span>Shipping</span>
-                  <span>{shipping === 0 ? "Free" : `₹${shipping}`}</span>
-                </div>
-                {subtotal < 499 && subtotal > 0 && (
-                  <div className="free-shipping-notice">
-                    Add ₹{499 - subtotal} more for free shipping
                   </div>
-                )}
-                <div className="summary-row total">
-                  <span>Total</span>
-                  <span>₹{total}</span>
-                </div>
-                <button className="checkout-btn" onClick={handleCheckout}>
-                  Proceed to Checkout
-                </button>
-              </div>
-            </>
+                );
+              })}
+            </div>
           )}
         </div>
-      </div>
+
+        {/* FOOTER SUMMARY */}
+        {cartItems.length > 0 && (
+          <div className="cart-drawer-footer">
+            <div className="cart-summary-line">
+              <span>Subtotal</span>
+              <span className="summary-val">₹{subtotal}</span>
+            </div>
+            <div className="cart-summary-line">
+              <span>Estimated Shipping</span>
+              <span className="summary-val">
+                {shipping === 0 ? <strong className="free-tag">FREE</strong> : `₹${shipping}`}
+              </span>
+            </div>
+            <div className="cart-summary-line cart-total-line">
+              <span>Total</span>
+              <span className="summary-val total-price">₹{total}</span>
+            </div>
+
+            <button
+              type="button"
+              className="cart-checkout-cta"
+              onClick={handleCheckout}
+            >
+              <span>Proceed to Checkout</span>
+              <FaLock className="lock-icon" />
+            </button>
+
+            <button
+              type="button"
+              className="cart-continue-btn"
+              onClick={onClose}
+            >
+              Continue Shopping
+            </button>
+          </div>
+        )}
+      </aside>
     </>
   );
 };
